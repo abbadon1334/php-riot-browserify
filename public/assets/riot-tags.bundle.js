@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})(window, function() {
-return /******/ (function(modules) { // webpackBootstrap
+var Nemesi =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -104,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nvar timer = {\n  'css': `timer,[is=\"timer\"]{ display: block; max-width: 300px; margin: 0 auto; border: 1px solid rgba(64, 139, 194, .5); border-radius: 6px; color: rgba(64, 139, 194, 1); height: 100px; line-height: 100px; text-align: center; background: white; } timer p,[is=\"timer\"] p{ margin: 0; }`,\n\n  'exports': {\n    onBeforeMount(props) {\n        // create the component initial state\n        this.state = {\n            time: props.start || 0\n        };\n    },\n\n    onUnmounted() {},\n\n    onClick() {\n        this.doApiRequest('test');\n    },\n\n    doApiRequest(rqst) {\n        return debounce((rqst) => {\n            fetch(`http://127.0.0.1:5000/?${rqst}`)\n                .then((res) => res.json())\n                .then((data) => {\n                    this.update({\n                        time: data.time\n                    });\n                });\n        }, 500)(rqst)\n    }\n  },\n\n  'template': function(template, expressionTypes, bindingTypes, getComponent) {\n    return template('<p expr0=\"expr0\"> </p>', [{\n      'redundantAttribute': 'expr0',\n      'selector': '[expr0]',\n\n      'expressions': [{\n        'type': expressionTypes.TEXT,\n        'childNodeIndex': 0,\n\n        'evaluate': function(scope) {\n          return ['Seconds Elapsed: ', scope.state.time].join('');\n        }\n      }, {\n        'type': expressionTypes.EVENT,\n        'name': 'onclick',\n\n        'evaluate': function(scope) {\n          return scope.onClick;\n        }\n      }]\n    }]);\n  },\n\n  'name': 'timer'\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (timer);\n\n\n//# sourceURL=webpack:///./bundles/riot/build/timer.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nvar timer = {\n  'css': `timer,[is=\"timer\"]{ display: block; max-width: 300px; margin: 0 auto; border: 1px solid rgba(64, 139, 194, .5); border-radius: 6px; color: rgba(64, 139, 194, 1); height: 100px; line-height: 100px; text-align: center; background: white; } timer p,[is=\"timer\"] p{ margin: 0; }`,\n\n  'exports': {\n    onBeforeMount(props) {\n        // create the component initial state\n        this.state = {\n            time: props.start || 0\n        };\n    },\n\n    onUnmounted() {},\n\n    onClick() {\n        this.doApiRequest('test');\n    },\n\n    doApiRequest(rqst) {\n        return debounce((rqst) => {\n            fetch(`http://127.0.0.1:5000/?${rqst}`)\n                .then((res) => res.json())\n                .then((data) => {\n                    this.update({\n                        time: data.time\n                    });\n                });\n        }, 500)(rqst)\n    }\n  },\n\n  'template': function(template, expressionTypes, bindingTypes, getComponent) {\n    return template('<p expr0=\"expr0\"> </p>', [{\n      'redundantAttribute': 'expr0',\n      'selector': '[expr0]',\n\n      'expressions': [{\n        'type': expressionTypes.TEXT,\n        'childNodeIndex': 0,\n\n        'evaluate': function(scope) {\n          return ['Seconds Elapsed: ', scope.state.time].join('');\n        }\n      }, {\n        'type': expressionTypes.EVENT,\n        'name': 'onclick',\n\n        'evaluate': function(scope) {\n          return scope.onClick;\n        }\n      }]\n    }]);\n  },\n\n  'name': 'timer'\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (timer);\n\n\n//# sourceURL=webpack://Nemesi/./bundles/riot/build/timer.js?");
 
 /***/ }),
 
@@ -115,9 +106,8 @@ eval("__webpack_require__.r(__webpack_exports__);\nvar timer = {\n  'css': `time
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__(/*! ./bundles/riot/build/timer.js */\"./bundles/riot/build/timer.js\");\n\n\n//# sourceURL=webpack:///multi_./bundles/riot/build/timer.js?");
+eval("module.exports = __webpack_require__(/*! ./bundles/riot/build/timer.js */\"./bundles/riot/build/timer.js\");\n\n\n//# sourceURL=webpack://Nemesi/multi_./bundles/riot/build/timer.js?");
 
 /***/ })
 
 /******/ })["default"];
-});

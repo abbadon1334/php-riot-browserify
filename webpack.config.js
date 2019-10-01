@@ -2,8 +2,8 @@ const path = require("path");
 const glob = require("glob");
 
 module.exports = {
-    mode:'development',
-    target:'web',
+    mode: 'development',
+    target: 'web',
     entry: {
         "nemesi": './bundles/js/build/Nemesi.js',
         "riot-tags": glob.sync('./bundles/riot/build/**/*.js')
@@ -15,7 +15,8 @@ module.exports = {
         filename: "../public/assets/[name].bundle.js",
         path: path.resolve(__dirname, 'public'),
         publicPath: '../public/',
-        libraryTarget: 'umd',
+        library: 'Nemesi',
+        libraryTarget: 'var',
         libraryExport: 'default',
     },
     module: {
