@@ -1,12 +1,13 @@
 const path = require("path");
 const glob = require("glob");
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
     target: 'web',
     entry: {
-        "nemesi": './bundles/js/build/Nemesi.js',
-        "riot-tags": glob.sync('./bundles/riot/build/**/*.js')
+        'nemesi': path.resolve(__dirname, 'bundles/js/build/Nemesi.js'),
+        'riot-tags': glob.sync('./bundles/riot/build/**/*.js')
     },
     node: {
         fs: "empty"
@@ -14,10 +15,20 @@ module.exports = {
     output: {
         filename: "../public/assets/[name].bundle.js",
         path: path.resolve(__dirname, 'public'),
-        publicPath: '../public/',
-        library: 'Nemesi',
-        libraryTarget: 'var',
-        libraryExport: 'default',
+    },
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+        maxInitialRequests: Infinity,
+        minSize: 0,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor'
+          }
+        }
+      }
     },
     module: {
         rules: [
