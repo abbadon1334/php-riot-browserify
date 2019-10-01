@@ -1,0 +1,19 @@
+{
+  "name": "Vaadin",
+  "authors": [
+    "abbadon1334 <fdanti@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "outDir": "bundles/js/build"
+  },
+  "exclude": [],
+  "include": [
+    "bundles/js/source/Nemesi.ts"
+  ]
+}

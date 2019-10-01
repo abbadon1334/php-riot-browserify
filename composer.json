@@ -1,0 +1,20 @@
+{
+  "name": "abbadon1334/vaadin",
+  "description": "ATK Vaadin",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Francesco Danti",
+      "email": "fdanti@gmail.com"
+    }
+  ],
+  "require": {
+    "atk4/core": "^1.3"
+  },
+  "scripts": {
+    "serve": [
+      "php -S 0.0.0.0:5000 -t public"
+    ]
+  }
+}
