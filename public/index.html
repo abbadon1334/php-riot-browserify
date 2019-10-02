@@ -19,8 +19,11 @@
 <timer></timer>
 
 <!-- riot tags -->
-<script src="assets/nemesi.bundle.js"></script>
-<script src="assets/riot-tags.bundle.js"></script>
+<script src="assets/bundle.js"></script>
 
+<script>
+    Nemesi.Core.init();
+    Nemesi.Tag.mountTag('timer',{})
+</script>
 </body>
 </html>

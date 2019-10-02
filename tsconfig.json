@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    //"noImplicitAny": true,
     "sourceMap": true,
-    "outDir": "bundles/js/build"
+    "declaration": true,
+    "outDir": "bundles/js/build",
+    "moduleResolution": "node"
   },
-  "exclude": [],
   "include": [
-    "bundles/js/source/Nemesi.ts"
+    "bundles/js/source/*"
   ]
 }

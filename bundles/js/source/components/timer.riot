@@ -8,20 +8,20 @@
                     time: props.start || 0
                 }
             },
-            onUnmounted() {},
+            onUnmounted() {
+            },
             onClick() {
                 this.doApiRequest('test');
             },
             doApiRequest(rqst) {
-                return debounce((rqst) => {
-                    fetch(`http://127.0.0.1:5000/?${rqst}`)
-                        .then((res) => res.json())
-                        .then((data) => {
-                            this.update({
-                                time: data.time
-                            })
+                var that = this;
+                Nemesi.Core.debounce(function() {
+                    Nemesi.Ajax.get('http://127.0.0.1:8000', {}, function (data) {
+                        that.update({
+                            time: data.time
                         })
-                }, 500)(rqst)
+                    });
+                }, 500);
             }
         }
     </script>
@@ -38,6 +38,7 @@
             text-align: center;
             background: white;
         }
+
         p {
             margin: 0;
         }
