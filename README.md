@@ -8,7 +8,7 @@
 `npm run build` or `node build.js` <-- this will start watchify (leave it running)
 
 in `src-js/lib` there is a library in develop
-in `src-js/components` there are rito components in dev (*)
+in `src-js/components` there are riot components in dev (*)
 
 ##### Start the server
 run : `composer run serve`
