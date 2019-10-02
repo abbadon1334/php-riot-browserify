@@ -10,8 +10,14 @@
 in `src-js/lib` there is a library in develop
 in `src-js/components` there are rito components in dev (*)
 
-you can edit them and watchify process will rebuild it for you.
-
 ##### Start the server
 run : `composer run serve`
-open `http://127.0.0.1:5000/index.html` click in the middle
+open `http://127.0.0.1:5000/index.html`
+
+click on the box it will show server time from php (just an example)
+
+look in timer.riot to see how it works
+
+##### Dev
+
+you can edit riot files in src-ts/components or in src-ts/lib and reload browser.
