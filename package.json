@@ -2,9 +2,9 @@
   "name": "atk-riot",
   "version": "1.0.0",
   "dependencies": {
-    "debounce": "^1.2.0",
-    "riot": "^4.6.2",
-    "wretch": "^1.5.4"
+    "debounce": "1.2.0",
+    "riot": "4.6.2",
+    "wretch": "1.5.4"
   },
   "files": [
     "./bundles/js/build"
@@ -13,18 +13,18 @@
     "build": "node ./build.js"
   },
   "devDependencies": {
-    "@types/node": "^12.7.4",
-    "@riotjs/compiler": "^4.4.3",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babelify": "^10.0.0",
+    "@types/node": "12.7.4",
+    "@riotjs/compiler": "4.4.3",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-es2015": "6.24.1",
+    "babelify": "10.0.0",
     "browserify": "*",
-    "esmify": "^2.1.1",
+    "esmify": "2.1.1",
     "glob": "latest",
-    "recursive-readdir": "^2.2.2",
-    "riotify": "^4.0.0",
+    "recursive-readdir": "2.2.2",
+    "riotify": "4.0.0",
     "tsify": "*",
-    "typescript": "^3.6.3",
-    "watchify": "^3.11.1"
+    "typescript": "3.6.3",
+    "watchify": "3.11.1"
   }
 }
