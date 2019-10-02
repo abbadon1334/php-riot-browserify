@@ -1,191 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
-  'css': `timer,[is="timer"]{ display: block; max-width: 300px; margin: 0 auto; border: 1px solid rgba(64, 139, 194, .5); border-radius: 6px; color: rgba(64, 139, 194, 1); height: 100px; line-height: 100px; text-align: center; background: white; } timer p,[is="timer"] p{ margin: 0; }`,
-  'exports': {
-    onBeforeMount(props) {
-      // create the component initial state
-      this.state = {
-        time: props.start || 0
-      };
-    },
-
-    onUnmounted() {},
-
-    onClick() {
-      this.doApiRequest('test');
-    },
-
-    doApiRequest(rqst) {
-      var that = this;
-      Nemesi.Core.debounce(function () {
-        Nemesi.Ajax.get('http://127.0.0.1:8000', {}, function (data) {
-          that.update({
-            time: data.time
-          });
-        });
-      }, 500);
-    }
-
-  },
-  'template': function (template, expressionTypes, bindingTypes, getComponent) {
-    return template('<p expr0="expr0"> </p>', [{
-      'redundantAttribute': 'expr0',
-      'selector': '[expr0]',
-      'expressions': [{
-        'type': expressionTypes.TEXT,
-        'childNodeIndex': 0,
-        'evaluate': function (scope) {
-          return ['Seconds Elapsed: ', scope.state.time].join('');
-        }
-      }, {
-        'type': expressionTypes.EVENT,
-        'name': 'onclick',
-        'evaluate': function (scope) {
-          return scope.onClick;
-        }
-      }]
-    }]);
-  },
-  'name': 'timer'
-};
-exports.default = _default;
-},{}],2:[function(require,module,exports){
-"use strict";
-exports.__esModule = true;
-var Ajax_1 = require("./lib/Ajax");
-var Dom_1 = require("./lib/Dom");
-var Utils_1 = require("./lib/Utils");
-var Tag_1 = require("./lib/Tag");
-var Core_1 = require("./lib/Core");
-var Nemesi = {
-    'Core': new Core_1.Core(),
-    'Ajax': new Ajax_1.Ajax(),
-    'Dom': new Dom_1.Dom(),
-    'Utils': new Utils_1.Utils(),
-    'Tag': new Tag_1.Tag()
-};
-window['Nemesi'] = Nemesi;
-exports["default"] = Nemesi;
-
-},{"./lib/Ajax":3,"./lib/Core":4,"./lib/Dom":5,"./lib/Tag":6,"./lib/Utils":7}],3:[function(require,module,exports){
-"use strict";
-exports.__esModule = true;
-var wretch_1 = require("wretch");
-var Ajax = /** @class */ (function () {
-    function Ajax() {
-    }
-    Ajax.defaultFuncSuccess = function (response) {
-        console.log(response);
-    };
-    Ajax.defaultFuncError = function (error) {
-        console.error(error);
-    };
-    Ajax.prototype.get = function (endpoint, data, onSuccess, onError) {
-        this._get(endpoint, data)
-            .res(function (response) { return onSuccess === undefined ? Ajax.defaultFuncSuccess : onSuccess; })["catch"](function (error) { return onError === undefined ? Ajax.defaultFuncError : onError; });
-    };
-    Ajax.prototype._get = function (endpoint, data) {
-        return wretch_1["default"](endpoint).get(data === undefined ? {} : data);
-    };
-    Ajax.prototype._post = function (endpoint, data) {
-        return wretch_1["default"](endpoint).post(data === undefined ? {} : data);
-    };
-    Ajax.prototype.getJSON = function (endpoint, data, onSuccess, onError) {
-        this._get(endpoint, data)
-            .json(function (response) { return onSuccess === undefined ? Ajax.defaultFuncSuccess : onSuccess; })["catch"](function (error) { return onError === undefined ? Ajax.defaultFuncError : onError; });
-    };
-    Ajax.prototype.post = function (endpoint, data, onSuccess, onError) {
-        this._post(endpoint, data)
-            .json(function (response) { return onSuccess === undefined ? Ajax.defaultFuncSuccess : onSuccess; })["catch"](function (error) { return onError === undefined ? Ajax.defaultFuncError : onError; });
-    };
-    Ajax.prototype.postJSON = function (endpoint, data, onSuccess, onError) {
-        this._post(endpoint, data)
-            .res(function (response) { return onSuccess === undefined ? Ajax.defaultFuncSuccess : onSuccess; })["catch"](function (error) { return onError === undefined ? Ajax.defaultFuncError : onError; });
-    };
-    return Ajax;
-}());
-exports.Ajax = Ajax;
-
-},{"wretch":10}],4:[function(require,module,exports){
-"use strict";
-exports.__esModule = true;
-var riot_1 = require("riot");
-var debounce_1 = require("debounce");
-var timer = require('../components/timer.riot')["default"];
-var Core = /** @class */ (function () {
-    function Core() {
-    }
-    Core.prototype.init = function () {
-        riot_1.register('timer', timer);
-    };
-    Core.prototype.debounce = function (f, millisec) {
-        debounce_1.debounce(f, millisec);
-    };
-    return Core;
-}());
-exports.Core = Core;
-
-},{"../components/timer.riot":1,"debounce":8,"riot":9}],5:[function(require,module,exports){
-"use strict";
-exports.__esModule = true;
-var Dom = /** @class */ (function () {
-    function Dom() {
-    }
-    Dom.prototype.getByID = function (id) {
-        return document.getElementById(id);
-    };
-    Dom.prototype.appendTo = function (id, tag, data) {
-        var el = document.createElement(tag);
-        this.getByID(id).appendChild(el);
-    };
-    Dom.prototype.replace = function (id, tag, data) {
-        var el = document.createElement(tag);
-        this.getByID(id).replaceWith(el);
-    };
-    return Dom;
-}());
-exports.Dom = Dom;
-
-},{}],6:[function(require,module,exports){
-"use strict";
-exports.__esModule = true;
-var riot_1 = require("riot");
-var Tag = /** @class */ (function () {
-    function Tag() {
-    }
-    Tag.prototype.unregisterTag = function (tag) {
-        riot_1.unregister(tag);
-    };
-    Tag.prototype.registerTag = function (tag, shell) {
-        riot_1.register(tag, shell);
-    };
-    Tag.prototype.mountTag = function (tag, data) {
-        riot_1.mount(tag, function () { return (data); });
-    };
-    Tag.prototype.unmountTag = function (tag, keepRootElement) {
-        riot_1.unmount(tag, keepRootElement);
-    };
-    return Tag;
-}());
-exports.Tag = Tag;
-
-},{"riot":9}],7:[function(require,module,exports){
-"use strict";
-exports.__esModule = true;
-var Utils = /** @class */ (function () {
-    function Utils() {
-    }
-    return Utils;
-}());
-exports.Utils = Utils;
-
-},{}],8:[function(require,module,exports){
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
  * be triggered. The function will be called after it stops being called for
@@ -257,7 +70,7 @@ debounce.debounce = debounce;
 
 module.exports = debounce;
 
-},{}],9:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 /* Riot v4.6.2, @license MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -2761,10 +2574,209 @@ module.exports = debounce;
 
 }));
 
-},{}],10:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 (function (global){
 !function(t,r){"object"==typeof exports&&"undefined"!=typeof module?module.exports=r():"function"==typeof define&&define.amd?define(r):(t=t||self).wretch=r()}(this,function(){"use strict";var y=function(){return(y=Object.assign||function(t){for(var r,e=1,o=arguments.length;e<o;e++)for(var n in r=arguments[e])Object.prototype.hasOwnProperty.call(r,n)&&(t[n]=r[n]);return t}).apply(this,arguments)},m=function(t,r,e){if(void 0===e&&(e=!1),!t||!r||"object"!=typeof t||"object"!=typeof r)return t;var o=y({},t);for(var n in r)r.hasOwnProperty(n)&&(r[n]instanceof Array&&t[n]instanceof Array?o[n]=e?t[n].concat(r[n]):r[n]:"object"==typeof r[n]&&"object"==typeof t[n]?o[n]=m(t[n],r[n],e):o[n]=r[n]);return o},b={defaults:{},errorType:null,polyfills:{fetch:null,FormData:null,URLSearchParams:null,performance:null,PerformanceObserver:null,AbortController:null},polyfill:function(t,r){for(var e=void 0===r?{}:r,o=e.doThrow,n=void 0===o||o,i=e.instance,s=void 0!==i&&i,u=[],c=2;c<arguments.length;c++)u[c-2]=arguments[c];var a=this.polyfills[t]||("undefined"!=typeof self?self[t]:null)||("undefined"!=typeof global?global[t]:null);if(n&&!a)throw new Error(t+" is not defined");return s&&a?new(a.bind.apply(a,[void 0].concat(u))):a}},s=function(t,r,e,o){if(!t.getEntriesByName)return!1;var n=t.getEntriesByName(r);return!!(n&&0<n.length)&&(e(n.reverse()[0]),o.clearMeasures&&o.clearMeasures(r),g.callbacks.delete(r),g.callbacks.size<1&&(g.observer.disconnect(),o.clearResourceTimings&&o.clearResourceTimings()),!0)},g={callbacks:new Map,observer:null,observe:function(t,r){if(t&&r){var o,e,n=b.polyfill("performance",{doThrow:!1}),i=b.polyfill("PerformanceObserver",{doThrow:!1});if(o=n,e=i,!g.observer&&o&&e&&(g.observer=new e(function(e){g.callbacks.forEach(function(t,r){s(e,r,t,o)})}),o.clearResourceTimings&&o.clearResourceTimings()),g.observer)s(n,t,r,n)||(g.callbacks.size<1&&g.observer.observe({entryTypes:["resource","measure"]}),g.callbacks.set(t,r))}}},t=function(){function d(t,r,e,o,n,i){void 0===e&&(e=new Map),void 0===o&&(o=[]),void 0===n&&(n=[]),void 0===i&&(i=[]),this._url=t,this._options=r,this._catchers=e,this._resolvers=o,this._middlewares=n,this._deferredChain=i}return d.factory=function(t,r){return void 0===t&&(t=""),void 0===r&&(r={}),new d(t,r)},d.prototype.selfFactory=function(t){var r=void 0===t?{}:t,e=r.url,o=void 0===e?this._url:e,n=r.options,i=void 0===n?this._options:n,s=r.catchers,u=void 0===s?this._catchers:s,c=r.resolvers,a=void 0===c?this._resolvers:c,f=r.middlewares,l=void 0===f?this._middlewares:f,p=r.deferredChain,h=void 0===p?this._deferredChain:p;return new d(o,y({},i),new Map(u),a.slice(),l.slice(),h.slice())},d.prototype.defaults=function(t,r){return void 0===r&&(r=!1),b.defaults=r?m(b.defaults,t):t,this},d.prototype.errorType=function(t){return b.errorType=t,this},d.prototype.polyfills=function(t){return b.polyfills=y({},b.polyfills,t),this},d.prototype.url=function(t,r){if(void 0===r&&(r=!1),r)return this.selfFactory({url:t});var e=this._url.split("?");return this.selfFactory({url:1<e.length?e[0]+t+"?"+e[1]:this._url+t})},d.prototype.options=function(t,r){return void 0===r&&(r=!0),this.selfFactory({options:r?m(this._options,t):t})},d.prototype.query=function(t,r){return void 0===r&&(r=!1),this.selfFactory({url:e(this._url,t,r)})},d.prototype.headers=function(t){return this.selfFactory({options:m(this._options,{headers:t||{}})})},d.prototype.accept=function(t){return this.headers({Accept:t})},d.prototype.content=function(t){return this.headers({"Content-Type":t})},d.prototype.auth=function(t){return this.headers({Authorization:t})},d.prototype.catcher=function(t,r){var e=new Map(this._catchers);return e.set(t,r),this.selfFactory({catchers:e})},d.prototype.signal=function(t){return this.selfFactory({options:y({},this._options,{signal:t.signal})})},d.prototype.resolve=function(t,r){return void 0===r&&(r=!1),this.selfFactory({resolvers:r?[t]:this._resolvers.concat([t])})},d.prototype.defer=function(t,r){return void 0===r&&(r=!1),this.selfFactory({deferredChain:r?[t]:this._deferredChain.concat([t])})},d.prototype.middlewares=function(t,r){return void 0===r&&(r=!1),this.selfFactory({middlewares:r?t:this._middlewares.concat(t)})},d.prototype.method=function(t,r,e){void 0===r&&(r={}),void 0===e&&(e=null);var o=e?"object"==typeof e?this.json(e):this.body(e):this;return function(e){var t=e._url,r=e._catchers,o=e._resolvers,n=e._middlewares,i=e._options,s=new Map(r),u=m(b.defaults,i),c=b.polyfill("AbortController",{doThrow:!1,instance:!0});!u.signal&&c&&(u.signal=c.signal);var a,f,l={ref:null,clear:function(){l.ref&&(clearTimeout(l.ref),l.ref=null)}},p=(f=n,a=b.polyfill("fetch"),(0===f.length?a:1===f.length?f[0](a):f.reduceRight(function(t,r,e){return e===f.length-2?r(t(a)):r(t)}))(t,u)),h=p.then(function(e){return l.clear(),e.ok?e:e[b.errorType||"text"]().then(function(t){var r=new Error(t);throw r[b.errorType||"text"]=t,r.status=e.status,r.response=e,r})}),d=function(t){return t.catch(function(t){if(l.clear(),s.has(t.status))return s.get(t.status)(t,e);if(s.has(t.name))return s.get(t.name)(t,e);throw t})},y=function(e){return function(r){return d(e?h.then(function(t){return t&&t[e]()}).then(function(t){return t&&r&&r(t)||t}):h.then(function(t){return t&&r&&r(t)||t}))}},v={res:y(null),json:y("json"),blob:y("blob"),formData:y("formData"),arrayBuffer:y("arrayBuffer"),text:y("text"),perfs:function(r){return p.then(function(t){return g.observe(t.url,r)}),v},setTimeout:function(t,r){return void 0===r&&(r=c),l.clear(),l.ref=setTimeout(function(){return r.abort()},t),v},controller:function(){return[c,v]},error:function(t,r){return s.set(t,r),v},badRequest:function(t){return v.error(400,t)},unauthorized:function(t){return v.error(401,t)},forbidden:function(t){return v.error(403,t)},notFound:function(t){return v.error(404,t)},timeout:function(t){return v.error(408,t)},internalError:function(t){return v.error(500,t)},onAbort:function(t){return v.error("AbortError",t)}};return o.reduce(function(t,r){return r(t,e)},v)}((o=o.options(y({},r,{method:t})))._deferredChain.reduce(function(t,r){return r(t,t._url,t._options)},o))},d.prototype.get=function(t){return this.method("GET",t)},d.prototype.delete=function(t){return this.method("DELETE",t)},d.prototype.put=function(t,r){return this.method("PUT",r,t)},d.prototype.post=function(t,r){return this.method("POST",r,t)},d.prototype.patch=function(t,r){return this.method("PATCH",r,t)},d.prototype.head=function(t){return this.method("HEAD",t)},d.prototype.opts=function(t){return this.method("OPTIONS",t)},d.prototype.replay=function(t){return this.method(this._options.method,t)},d.prototype.body=function(t){return this.selfFactory({options:y({},this._options,{body:t})})},d.prototype.json=function(t){return this.content("application/json").body(JSON.stringify(t))},d.prototype.formData=function(t){return this.body(function(t){var r=b.polyfill("FormData",{instance:!0});for(var e in t)if(t[e]instanceof Array)for(var o=0,n=t[e];o<n.length;o++){var i=n[o];r.append(e+"[]",i)}else r.append(e,t[e]);return r}(t))},d.prototype.formUrl=function(t){return this.body("string"==typeof t?t:(e=t,Object.keys(e).map(function(r){var t=e[r];return t instanceof Array?t.map(function(t){return o(r,t)}).join("&"):o(r,t)}).join("&"))).content("application/x-www-form-urlencoded");var e},d}(),e=function(t,r,e){var o;if("string"==typeof r)o=r;else{var n=b.polyfill("URLSearchParams",{instance:!0});for(var i in r)if(r[i]instanceof Array)for(var s=0,u=r[i];s<u.length;s++){var c=u[s];n.append(i,c)}else n.append(i,r[i]);o=n.toString()}var a=t.split("?");return e||a.length<2?a[0]+"?"+o:t+"&"+o};function o(t,r){return encodeURIComponent(t)+"="+encodeURIComponent("object"==typeof r?JSON.stringify(r):""+r)}var r=t.factory;return r.default=t.factory,r});
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[2,1,4,3,5,6,7]);
+},{}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  'css': `timer,[is="timer"]{ display: block; max-width: 300px; margin: 0 auto; border: 1px solid rgba(64, 139, 194, .5); border-radius: 6px; color: rgba(64, 139, 194, 1); min-height: 100px; text-align: center; background: white; } timer p,[is="timer"] p{ margin: 0; }`,
+  'exports': {
+    onBeforeMount(props) {
+      // create the component initial state
+      this.state = {
+        time: props.start || 0
+      };
+    },
+
+    onUnmounted() {},
+
+    onClick() {
+      this.doApiRequest('test');
+    },
+
+    doApiRequest(rqst) {
+      Nemesi.Ajax.getJSON('http://127.0.0.1:5000', {}).then(data => {
+        this.update({
+          time: data.time
+        });
+      });
+    }
+
+  },
+  'template': function (template, expressionTypes, bindingTypes, getComponent) {
+    return template('<p expr19="expr19">Server time<br/><small expr20="expr20"> </small></p>', [{
+      'redundantAttribute': 'expr19',
+      'selector': '[expr19]',
+      'expressions': [{
+        'type': expressionTypes.EVENT,
+        'name': 'onclick',
+        'evaluate': function (scope) {
+          return scope.onClick;
+        }
+      }]
+    }, {
+      'redundantAttribute': 'expr20',
+      'selector': '[expr20]',
+      'expressions': [{
+        'type': expressionTypes.TEXT,
+        'childNodeIndex': 0,
+        'evaluate': function (scope) {
+          return scope.state.time;
+        }
+      }]
+    }]);
+  },
+  'name': 'timer'
+};
+exports.default = _default;
+},{}],5:[function(require,module,exports){
+"use strict";
+exports.__esModule = true;
+var Ajax_1 = require("./lib/Ajax");
+var Dom_1 = require("./lib/Dom");
+var Utils_1 = require("./lib/Utils");
+var Tag_1 = require("./lib/Tag");
+var Core_1 = require("./lib/Core");
+var Nemesi = {
+    'Core': new Core_1.Core(),
+    'Ajax': new Ajax_1.Ajax(),
+    'Dom': new Dom_1.Dom(),
+    'Utils': new Utils_1.Utils(),
+    'Tag': new Tag_1.Tag()
+};
+window['Nemesi'] = Nemesi;
+exports["default"] = Nemesi;
+
+},{"./lib/Ajax":6,"./lib/Core":7,"./lib/Dom":8,"./lib/Tag":9,"./lib/Utils":10}],6:[function(require,module,exports){
+"use strict";
+exports.__esModule = true;
+var wretch_1 = require("wretch");
+var Ajax = /** @class */ (function () {
+    function Ajax() {
+    }
+    Ajax.defaultFuncSuccess = function (response) {
+        console.log(response);
+    };
+    Ajax.defaultFuncError = function (error) {
+        console.error(error);
+    };
+    Ajax.prototype.get = function (endpoint, data, onSuccess, onError) {
+        return new Promise(function (resolve, reject) {
+            Ajax._get(endpoint, data)
+                .res(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+        });
+    };
+    Ajax._get = function (endpoint, data) {
+        return wretch_1["default"](endpoint).get(data === undefined ? {} : data);
+    };
+    Ajax._post = function (endpoint, data) {
+        return wretch_1["default"](endpoint).post(data === undefined ? {} : data);
+    };
+    Ajax.prototype.getJSON = function (endpoint, data) {
+        return new Promise(function (resolve, reject) {
+            Ajax._get(endpoint, data)
+                .json(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+        });
+    };
+    Ajax.prototype.post = function (endpoint, data, onSuccess, onError) {
+        return new Promise(function (resolve, reject) {
+            Ajax._post(endpoint, data)
+                .res(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+        });
+    };
+    Ajax.prototype.postJSON = function (endpoint, data, onSuccess, onError) {
+        return new Promise(function (resolve, reject) {
+            Ajax._post(endpoint, data)
+                .json(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+        });
+    };
+    return Ajax;
+}());
+exports.Ajax = Ajax;
+
+},{"wretch":3}],7:[function(require,module,exports){
+"use strict";
+exports.__esModule = true;
+var riot_1 = require("riot");
+var debounce_1 = require("debounce");
+var timer = require('../components/timer.riot')["default"];
+var Core = /** @class */ (function () {
+    function Core() {
+    }
+    Core.prototype.init = function () {
+        riot_1.install(function (component) {
+            return component;
+        });
+        riot_1.register('timer', timer);
+    };
+    Core.prototype.debounce = function (f, millisec) {
+        return debounce_1.debounce(f, millisec);
+    };
+    return Core;
+}());
+exports.Core = Core;
+
+},{"../components/timer.riot":4,"debounce":1,"riot":2}],8:[function(require,module,exports){
+"use strict";
+exports.__esModule = true;
+var Dom = /** @class */ (function () {
+    function Dom() {
+    }
+    Dom.prototype.getByID = function (id) {
+        return document.getElementById(id);
+    };
+    Dom.prototype.appendTo = function (id, tag, data) {
+        var el = document.createElement(tag);
+        this.getByID(id).appendChild(el);
+    };
+    Dom.prototype.replace = function (id, tag, data) {
+        var el = document.createElement(tag);
+        this.getByID(id).replaceWith(el);
+    };
+    return Dom;
+}());
+exports.Dom = Dom;
+
+},{}],9:[function(require,module,exports){
+"use strict";
+exports.__esModule = true;
+var riot_1 = require("riot");
+var Tag = /** @class */ (function () {
+    function Tag() {
+    }
+    Tag.prototype.unregisterTag = function (tag) {
+        riot_1.unregister(tag);
+    };
+    Tag.prototype.registerTag = function (tag, shell) {
+        riot_1.register(tag, shell);
+    };
+    Tag.prototype.mountTag = function (tag, data) {
+        riot_1.mount(tag, function () { return (data); });
+    };
+    Tag.prototype.unmountTag = function (tag, keepRootElement) {
+        riot_1.unmount(tag, keepRootElement);
+    };
+    return Tag;
+}());
+exports.Tag = Tag;
+
+},{"riot":2}],10:[function(require,module,exports){
+"use strict";
+exports.__esModule = true;
+var Utils = /** @class */ (function () {
+    function Utils() {
+    }
+    return Utils;
+}());
+exports.Utils = Utils;
+
+},{}]},{},[5,4,6,7,8,9,10]);

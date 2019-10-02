@@ -10,7 +10,8 @@ const path = require('path')
 
 var isFirstInit = true;
 
-var sourceDir = "bundles/js/source";
+var sourceDir = "src-ts";
+var sourceDirIndex = "index.ts";
 var bundleOutputFile = "public/assets/bundle.js";
 
 recursive( path.resolve(__dirname, sourceDir)).then(function (entries) {
@@ -52,7 +53,7 @@ recursive( path.resolve(__dirname, sourceDir)).then(function (entries) {
         packageCache: {},
         plugin: [watchify]
     })
-        .add('bundles/js/source/index.ts')
+        .add(path.resolve(__dirname,sourceDir,sourceDirIndex))
         .transform(riotify)
         .plugin([tsify, esmify]);
 
