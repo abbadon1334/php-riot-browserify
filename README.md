@@ -1,4 +1,6 @@
 
+Just a test for a dev environment, to work with source riot file and typescript source for web aumetically bundled by browserify
+
 ##### Prepare
 
 `composer install`

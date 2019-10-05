@@ -12,16 +12,12 @@
             onUnmounted() {
             },
             onClick() {
-                this.doApiRequest('test');
-            },
-            doApiRequest(rqst) {
-
-                Nemesi.Ajax.getJSON('http://127.0.0.1:5000', {})
-                    .then(data => {
-                        this.update({
-                            time: data.time
-                        })
-                    });
+                Nemesi.HTTPClient
+                    .getJSON('http://127.0.0.1:5000', {})
+                    .then(response => this.update({
+                        time: response.time
+                    }))
+                    .catch(error => alert(error))
             }
         }
     </script>

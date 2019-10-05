@@ -1,76 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-/**
- * Returns a function, that, as long as it continues to be invoked, will not
- * be triggered. The function will be called after it stops being called for
- * N milliseconds. If `immediate` is passed, trigger the function on the
- * leading edge, instead of the trailing. The function also has a property 'clear' 
- * that is a function which will clear the timer to prevent previously scheduled executions. 
- *
- * @source underscore.js
- * @see http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
- * @param {Function} function to wrap
- * @param {Number} timeout in ms (`100`)
- * @param {Boolean} whether to execute at the beginning (`false`)
- * @api public
- */
-function debounce(func, wait, immediate){
-  var timeout, args, context, timestamp, result;
-  if (null == wait) wait = 100;
-
-  function later() {
-    var last = Date.now() - timestamp;
-
-    if (last < wait && last >= 0) {
-      timeout = setTimeout(later, wait - last);
-    } else {
-      timeout = null;
-      if (!immediate) {
-        result = func.apply(context, args);
-        context = args = null;
-      }
-    }
-  };
-
-  var debounced = function(){
-    context = this;
-    args = arguments;
-    timestamp = Date.now();
-    var callNow = immediate && !timeout;
-    if (!timeout) timeout = setTimeout(later, wait);
-    if (callNow) {
-      result = func.apply(context, args);
-      context = args = null;
-    }
-
-    return result;
-  };
-
-  debounced.clear = function() {
-    if (timeout) {
-      clearTimeout(timeout);
-      timeout = null;
-    }
-  };
-  
-  debounced.flush = function() {
-    if (timeout) {
-      result = func.apply(context, args);
-      context = args = null;
-      
-      clearTimeout(timeout);
-      timeout = null;
-    }
-  };
-
-  return debounced;
-};
-
-// Adds compatibility for ES modules
-debounce.debounce = debounce;
-
-module.exports = debounce;
-
-},{}],2:[function(require,module,exports){
 /* Riot v4.6.2, @license MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -2574,13 +2502,13 @@ module.exports = debounce;
 
 }));
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 (function (global){
 !function(t,r){"object"==typeof exports&&"undefined"!=typeof module?module.exports=r():"function"==typeof define&&define.amd?define(r):(t=t||self).wretch=r()}(this,function(){"use strict";var y=function(){return(y=Object.assign||function(t){for(var r,e=1,o=arguments.length;e<o;e++)for(var n in r=arguments[e])Object.prototype.hasOwnProperty.call(r,n)&&(t[n]=r[n]);return t}).apply(this,arguments)},m=function(t,r,e){if(void 0===e&&(e=!1),!t||!r||"object"!=typeof t||"object"!=typeof r)return t;var o=y({},t);for(var n in r)r.hasOwnProperty(n)&&(r[n]instanceof Array&&t[n]instanceof Array?o[n]=e?t[n].concat(r[n]):r[n]:"object"==typeof r[n]&&"object"==typeof t[n]?o[n]=m(t[n],r[n],e):o[n]=r[n]);return o},b={defaults:{},errorType:null,polyfills:{fetch:null,FormData:null,URLSearchParams:null,performance:null,PerformanceObserver:null,AbortController:null},polyfill:function(t,r){for(var e=void 0===r?{}:r,o=e.doThrow,n=void 0===o||o,i=e.instance,s=void 0!==i&&i,u=[],c=2;c<arguments.length;c++)u[c-2]=arguments[c];var a=this.polyfills[t]||("undefined"!=typeof self?self[t]:null)||("undefined"!=typeof global?global[t]:null);if(n&&!a)throw new Error(t+" is not defined");return s&&a?new(a.bind.apply(a,[void 0].concat(u))):a}},s=function(t,r,e,o){if(!t.getEntriesByName)return!1;var n=t.getEntriesByName(r);return!!(n&&0<n.length)&&(e(n.reverse()[0]),o.clearMeasures&&o.clearMeasures(r),g.callbacks.delete(r),g.callbacks.size<1&&(g.observer.disconnect(),o.clearResourceTimings&&o.clearResourceTimings()),!0)},g={callbacks:new Map,observer:null,observe:function(t,r){if(t&&r){var o,e,n=b.polyfill("performance",{doThrow:!1}),i=b.polyfill("PerformanceObserver",{doThrow:!1});if(o=n,e=i,!g.observer&&o&&e&&(g.observer=new e(function(e){g.callbacks.forEach(function(t,r){s(e,r,t,o)})}),o.clearResourceTimings&&o.clearResourceTimings()),g.observer)s(n,t,r,n)||(g.callbacks.size<1&&g.observer.observe({entryTypes:["resource","measure"]}),g.callbacks.set(t,r))}}},t=function(){function d(t,r,e,o,n,i){void 0===e&&(e=new Map),void 0===o&&(o=[]),void 0===n&&(n=[]),void 0===i&&(i=[]),this._url=t,this._options=r,this._catchers=e,this._resolvers=o,this._middlewares=n,this._deferredChain=i}return d.factory=function(t,r){return void 0===t&&(t=""),void 0===r&&(r={}),new d(t,r)},d.prototype.selfFactory=function(t){var r=void 0===t?{}:t,e=r.url,o=void 0===e?this._url:e,n=r.options,i=void 0===n?this._options:n,s=r.catchers,u=void 0===s?this._catchers:s,c=r.resolvers,a=void 0===c?this._resolvers:c,f=r.middlewares,l=void 0===f?this._middlewares:f,p=r.deferredChain,h=void 0===p?this._deferredChain:p;return new d(o,y({},i),new Map(u),a.slice(),l.slice(),h.slice())},d.prototype.defaults=function(t,r){return void 0===r&&(r=!1),b.defaults=r?m(b.defaults,t):t,this},d.prototype.errorType=function(t){return b.errorType=t,this},d.prototype.polyfills=function(t){return b.polyfills=y({},b.polyfills,t),this},d.prototype.url=function(t,r){if(void 0===r&&(r=!1),r)return this.selfFactory({url:t});var e=this._url.split("?");return this.selfFactory({url:1<e.length?e[0]+t+"?"+e[1]:this._url+t})},d.prototype.options=function(t,r){return void 0===r&&(r=!0),this.selfFactory({options:r?m(this._options,t):t})},d.prototype.query=function(t,r){return void 0===r&&(r=!1),this.selfFactory({url:e(this._url,t,r)})},d.prototype.headers=function(t){return this.selfFactory({options:m(this._options,{headers:t||{}})})},d.prototype.accept=function(t){return this.headers({Accept:t})},d.prototype.content=function(t){return this.headers({"Content-Type":t})},d.prototype.auth=function(t){return this.headers({Authorization:t})},d.prototype.catcher=function(t,r){var e=new Map(this._catchers);return e.set(t,r),this.selfFactory({catchers:e})},d.prototype.signal=function(t){return this.selfFactory({options:y({},this._options,{signal:t.signal})})},d.prototype.resolve=function(t,r){return void 0===r&&(r=!1),this.selfFactory({resolvers:r?[t]:this._resolvers.concat([t])})},d.prototype.defer=function(t,r){return void 0===r&&(r=!1),this.selfFactory({deferredChain:r?[t]:this._deferredChain.concat([t])})},d.prototype.middlewares=function(t,r){return void 0===r&&(r=!1),this.selfFactory({middlewares:r?t:this._middlewares.concat(t)})},d.prototype.method=function(t,r,e){void 0===r&&(r={}),void 0===e&&(e=null);var o=e?"object"==typeof e?this.json(e):this.body(e):this;return function(e){var t=e._url,r=e._catchers,o=e._resolvers,n=e._middlewares,i=e._options,s=new Map(r),u=m(b.defaults,i),c=b.polyfill("AbortController",{doThrow:!1,instance:!0});!u.signal&&c&&(u.signal=c.signal);var a,f,l={ref:null,clear:function(){l.ref&&(clearTimeout(l.ref),l.ref=null)}},p=(f=n,a=b.polyfill("fetch"),(0===f.length?a:1===f.length?f[0](a):f.reduceRight(function(t,r,e){return e===f.length-2?r(t(a)):r(t)}))(t,u)),h=p.then(function(e){return l.clear(),e.ok?e:e[b.errorType||"text"]().then(function(t){var r=new Error(t);throw r[b.errorType||"text"]=t,r.status=e.status,r.response=e,r})}),d=function(t){return t.catch(function(t){if(l.clear(),s.has(t.status))return s.get(t.status)(t,e);if(s.has(t.name))return s.get(t.name)(t,e);throw t})},y=function(e){return function(r){return d(e?h.then(function(t){return t&&t[e]()}).then(function(t){return t&&r&&r(t)||t}):h.then(function(t){return t&&r&&r(t)||t}))}},v={res:y(null),json:y("json"),blob:y("blob"),formData:y("formData"),arrayBuffer:y("arrayBuffer"),text:y("text"),perfs:function(r){return p.then(function(t){return g.observe(t.url,r)}),v},setTimeout:function(t,r){return void 0===r&&(r=c),l.clear(),l.ref=setTimeout(function(){return r.abort()},t),v},controller:function(){return[c,v]},error:function(t,r){return s.set(t,r),v},badRequest:function(t){return v.error(400,t)},unauthorized:function(t){return v.error(401,t)},forbidden:function(t){return v.error(403,t)},notFound:function(t){return v.error(404,t)},timeout:function(t){return v.error(408,t)},internalError:function(t){return v.error(500,t)},onAbort:function(t){return v.error("AbortError",t)}};return o.reduce(function(t,r){return r(t,e)},v)}((o=o.options(y({},r,{method:t})))._deferredChain.reduce(function(t,r){return r(t,t._url,t._options)},o))},d.prototype.get=function(t){return this.method("GET",t)},d.prototype.delete=function(t){return this.method("DELETE",t)},d.prototype.put=function(t,r){return this.method("PUT",r,t)},d.prototype.post=function(t,r){return this.method("POST",r,t)},d.prototype.patch=function(t,r){return this.method("PATCH",r,t)},d.prototype.head=function(t){return this.method("HEAD",t)},d.prototype.opts=function(t){return this.method("OPTIONS",t)},d.prototype.replay=function(t){return this.method(this._options.method,t)},d.prototype.body=function(t){return this.selfFactory({options:y({},this._options,{body:t})})},d.prototype.json=function(t){return this.content("application/json").body(JSON.stringify(t))},d.prototype.formData=function(t){return this.body(function(t){var r=b.polyfill("FormData",{instance:!0});for(var e in t)if(t[e]instanceof Array)for(var o=0,n=t[e];o<n.length;o++){var i=n[o];r.append(e+"[]",i)}else r.append(e,t[e]);return r}(t))},d.prototype.formUrl=function(t){return this.body("string"==typeof t?t:(e=t,Object.keys(e).map(function(r){var t=e[r];return t instanceof Array?t.map(function(t){return o(r,t)}).join("&"):o(r,t)}).join("&"))).content("application/x-www-form-urlencoded");var e},d}(),e=function(t,r,e){var o;if("string"==typeof r)o=r;else{var n=b.polyfill("URLSearchParams",{instance:!0});for(var i in r)if(r[i]instanceof Array)for(var s=0,u=r[i];s<u.length;s++){var c=u[s];n.append(i,c)}else n.append(i,r[i]);o=n.toString()}var a=t.split("?");return e||a.length<2?a[0]+"?"+o:t+"&"+o};function o(t,r){return encodeURIComponent(t)+"="+encodeURIComponent("object"==typeof r?JSON.stringify(r):""+r)}var r=t.factory;return r.default=t.factory,r});
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2600,22 +2528,16 @@ var _default = {
     onUnmounted() {},
 
     onClick() {
-      this.doApiRequest('test');
-    },
-
-    doApiRequest(rqst) {
-      Nemesi.Ajax.getJSON('http://127.0.0.1:5000', {}).then(data => {
-        this.update({
-          time: data.time
-        });
-      });
+      Nemesi.HTTPClient.getJSON('http://127.0.0.1:5000', {}).then(response => this.update({
+        time: response.time
+      })).catch(error => alert(error));
     }
 
   },
   'template': function (template, expressionTypes, bindingTypes, getComponent) {
-    return template('<p expr19="expr19">Server time<br/><small expr20="expr20"> </small></p>', [{
-      'redundantAttribute': 'expr19',
-      'selector': '[expr19]',
+    return template('<p expr26="expr26">Server time<br/><small expr27="expr27"> </small></p>', [{
+      'redundantAttribute': 'expr26',
+      'selector': '[expr26]',
       'expressions': [{
         'type': expressionTypes.EVENT,
         'name': 'onclick',
@@ -2624,8 +2546,8 @@ var _default = {
         }
       }]
     }, {
-      'redundantAttribute': 'expr20',
-      'selector': '[expr20]',
+      'redundantAttribute': 'expr27',
+      'selector': '[expr27]',
       'expressions': [{
         'type': expressionTypes.TEXT,
         'childNodeIndex': 0,
@@ -2638,17 +2560,17 @@ var _default = {
   'name': 'timer'
 };
 exports.default = _default;
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
-var Ajax_1 = require("./lib/Ajax");
+var HTTPClient_1 = require("./lib/HTTPClient");
 var Dom_1 = require("./lib/Dom");
 var Utils_1 = require("./lib/Utils");
 var Tag_1 = require("./lib/Tag");
 var Core_1 = require("./lib/Core");
 var Nemesi = {
     'Core': new Core_1.Core(),
-    'Ajax': new Ajax_1.Ajax(),
+    'HTTPClient': new HTTPClient_1.HTTPClient(),
     'Dom': new Dom_1.Dom(),
     'Utils': new Utils_1.Utils(),
     'Tag': new Tag_1.Tag()
@@ -2656,76 +2578,42 @@ var Nemesi = {
 window['Nemesi'] = Nemesi;
 exports["default"] = Nemesi;
 
-},{"./lib/Ajax":6,"./lib/Core":7,"./lib/Dom":8,"./lib/Tag":9,"./lib/Utils":10}],6:[function(require,module,exports){
-"use strict";
-exports.__esModule = true;
-var wretch_1 = require("wretch");
-var Ajax = /** @class */ (function () {
-    function Ajax() {
-    }
-    Ajax.defaultFuncSuccess = function (response) {
-        console.log(response);
-    };
-    Ajax.defaultFuncError = function (error) {
-        console.error(error);
-    };
-    Ajax.prototype.get = function (endpoint, data, onSuccess, onError) {
-        return new Promise(function (resolve, reject) {
-            Ajax._get(endpoint, data)
-                .res(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
-        });
-    };
-    Ajax._get = function (endpoint, data) {
-        return wretch_1["default"](endpoint).get(data === undefined ? {} : data);
-    };
-    Ajax._post = function (endpoint, data) {
-        return wretch_1["default"](endpoint).post(data === undefined ? {} : data);
-    };
-    Ajax.prototype.getJSON = function (endpoint, data) {
-        return new Promise(function (resolve, reject) {
-            Ajax._get(endpoint, data)
-                .json(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
-        });
-    };
-    Ajax.prototype.post = function (endpoint, data, onSuccess, onError) {
-        return new Promise(function (resolve, reject) {
-            Ajax._post(endpoint, data)
-                .res(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
-        });
-    };
-    Ajax.prototype.postJSON = function (endpoint, data, onSuccess, onError) {
-        return new Promise(function (resolve, reject) {
-            Ajax._post(endpoint, data)
-                .json(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
-        });
-    };
-    return Ajax;
-}());
-exports.Ajax = Ajax;
-
-},{"wretch":3}],7:[function(require,module,exports){
+},{"./lib/Core":5,"./lib/Dom":6,"./lib/HTTPClient":7,"./lib/Tag":8,"./lib/Utils":9}],5:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 var riot_1 = require("riot");
-var debounce_1 = require("debounce");
+// @TODO fetch dir components and get all elements
 var timer = require('../components/timer.riot')["default"];
 var Core = /** @class */ (function () {
     function Core() {
     }
     Core.prototype.init = function () {
+        // install is FIFO
         riot_1.install(function (component) {
+            console.log('install1:' + component.name);
             return component;
         });
+        riot_1.install(function (component) {
+            console.log('install2:' + component.name);
+            return component;
+        });
+        riot_1.install(function (component) {
+            console.log('install3:' + component.name);
+            return component;
+        });
+        riot_1.install(function (component) {
+            console.log('install4:' + component.name);
+            return component;
+        });
+        console.log('before register');
         riot_1.register('timer', timer);
-    };
-    Core.prototype.debounce = function (f, millisec) {
-        return debounce_1.debounce(f, millisec);
+        console.log('after register');
     };
     return Core;
 }());
 exports.Core = Core;
 
-},{"../components/timer.riot":4,"debounce":1,"riot":2}],8:[function(require,module,exports){
+},{"../components/timer.riot":3,"riot":1}],6:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 var Dom = /** @class */ (function () {
@@ -2733,6 +2621,9 @@ var Dom = /** @class */ (function () {
     }
     Dom.prototype.getByID = function (id) {
         return document.getElementById(id);
+    };
+    Dom.prototype.getByTAG = function (tag) {
+        return document.querySelector(tag);
     };
     Dom.prototype.appendTo = function (id, tag, data) {
         var el = document.createElement(tag);
@@ -2746,22 +2637,132 @@ var Dom = /** @class */ (function () {
 }());
 exports.Dom = Dom;
 
-},{}],9:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+exports.__esModule = true;
+var wretch_1 = require("wretch");
+var HTTPClient = /** @class */ (function () {
+    function HTTPClient() {
+    }
+    HTTPClient._get = function (endpoint, data) {
+        return wretch_1["default"](endpoint).get(data === undefined ? {} : data);
+    };
+    HTTPClient._post = function (endpoint, data) {
+        return wretch_1["default"](endpoint).post(data === undefined ? {} : data);
+    };
+    HTTPClient.prototype.get = function (endpoint, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new Promise(function (resolve, reject) {
+                            HTTPClient._get(endpoint, data)
+                                .res(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+                        })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    HTTPClient.prototype.getJSON = function (endpoint, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        HTTPClient._get(endpoint, data)
+                            .json(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+                    })];
+            });
+        });
+    };
+    HTTPClient.prototype.post = function (endpoint, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        HTTPClient._post(endpoint, data)
+                            .res(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+                    })];
+            });
+        });
+    };
+    HTTPClient.prototype.postJSON = function (endpoint, data, onSuccess, onError) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        HTTPClient._post(endpoint, data)
+                            .json(function (response) { return resolve(response); })["catch"](function (error) { return reject(error); });
+                    })];
+            });
+        });
+    };
+    return HTTPClient;
+}());
+exports.HTTPClient = HTTPClient;
+
+},{"wretch":2}],8:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 var riot_1 = require("riot");
 var Tag = /** @class */ (function () {
     function Tag() {
+        // keep trace of already registered tag
+        this.registerTags = new Map();
     }
+    Tag.prototype.initTag = function (tag, shell) {
+        this.registerTag(tag, shell);
+    };
+    Tag.prototype.isRegistered = function (tag) {
+        return this.registerTags[tag] !== true;
+    };
+    // i think in my case this is not needed
     Tag.prototype.unregisterTag = function (tag) {
         riot_1.unregister(tag);
     };
     Tag.prototype.registerTag = function (tag, shell) {
+        if (this.isRegistered(tag))
+            return;
+        this.registerTag[tag] = true;
         riot_1.register(tag, shell);
     };
     Tag.prototype.mountTag = function (tag, data) {
+        console.log('mount tag: ' + tag);
         riot_1.mount(tag, function () { return (data); });
     };
+    // @todo check if is much faster for specific tag than vanilla js
     Tag.prototype.unmountTag = function (tag, keepRootElement) {
         riot_1.unmount(tag, keepRootElement);
     };
@@ -2769,7 +2770,7 @@ var Tag = /** @class */ (function () {
 }());
 exports.Tag = Tag;
 
-},{"riot":2}],10:[function(require,module,exports){
+},{"riot":1}],9:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 var Utils = /** @class */ (function () {
@@ -2779,4 +2780,4 @@ var Utils = /** @class */ (function () {
 }());
 exports.Utils = Utils;
 
-},{}]},{},[5,4,6,7,8,9,10]);
+},{}]},{},[4,3,5,6,7,8,9]);

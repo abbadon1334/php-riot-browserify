@@ -1,22 +1,34 @@
+import {install, register} from "riot"
 
-import {install, register} from "riot";
-import {debounce} from "debounce"
-import Nemesi from "../index";
-
+// @TODO fetch dir components and get all elements
 const timer = require('../components/timer.riot').default;
 
 export class Core {
 
-    init() {
+    public init() {
 
-        install(function(component) {
+        // install is FIFO
+        install(function (component) {
+            console.log('install1:' + component.name);
             return component;
         });
 
-        register('timer', timer);
-    }
+        install(function (component) {
+            console.log('install2:' + component.name);
+            return component;
+        });
 
-    debounce(f, millisec: number) {
-        return debounce(f, millisec);
+        install(function (component) {
+            console.log('install3:' + component.name);
+            return component;
+        });
+        install(function (component) {
+            console.log('install4:' + component.name);
+            return component;
+        });
+
+        console.log('before register');
+        register('timer', timer);
+        console.log('after register');
     }
 }

@@ -4,6 +4,10 @@ export class Dom {
         return document.getElementById(id);
     }
 
+    getByTAG(tag: string) {
+        return document.querySelector(tag);
+    }
+
     appendTo(id: string, tag, data: object) {
 
         let el = document.createElement(tag);
