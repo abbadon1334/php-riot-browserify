@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "debounce": "1.2.0",
-    "riot": "4.6.2",
+    "riot": "4.6.4",
     "wretch": "1.5.4"
   },
   "files": [
