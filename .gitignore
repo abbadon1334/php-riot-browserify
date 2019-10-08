@@ -16,4 +16,4 @@ yarn.lock
 run_local.sh
 /coverage
 /node_modules
-package.lock
+package-lock.json
