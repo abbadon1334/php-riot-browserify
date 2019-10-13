@@ -25,6 +25,7 @@
     "riotify": "4.0.0",
     "tsify": "*",
     "typescript": "3.6.3",
-    "watchify": "3.11.1"
+    "watchify": "3.11.1",
+    "uglifyify": "^5.0.2"
   }
 }
