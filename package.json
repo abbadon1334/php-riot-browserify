@@ -22,7 +22,7 @@
     "esmify": "2.1.1",
     "glob": "latest",
     "recursive-readdir": "2.2.2",
-    "riotify": "4.0.0",
+    "riotify": "5.0.0",
     "tsify": "*",
     "typescript": "3.6.3",
     "watchify": "3.11.1",
