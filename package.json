@@ -2,7 +2,7 @@
   "name": "php-riot-browserify",
   "version": "1.0.0",
   "dependencies": {
-    "debounce": "1.2.0",
+    "debounce": "1.2.1",
     "riot": "4.6.5",
     "wretch": "1.5.4"
   },
