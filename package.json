@@ -24,7 +24,7 @@
     "recursive-readdir": "2.2.2",
     "riotify": "4.0.0",
     "tsify": "*",
-    "typescript": "3.6.3",
+    "typescript": "3.9.10",
     "watchify": "3.11.1",
     "uglifyify": "^5.0.2"
   }
