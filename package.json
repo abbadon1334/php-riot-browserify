@@ -4,7 +4,7 @@
   "dependencies": {
     "debounce": "1.2.0",
     "riot": "4.6.5",
-    "wretch": "1.5.4"
+    "wretch": "1.7.10"
   },
   "files": [
     "./bundles/js/build"
